@@ -46,6 +46,7 @@ module Processor # (
 	wire core_memory_rden [NUM_CORES-1:0];
 	wire core_memory_wren [NUM_CORES-1:0];
 	wire [31:0] core_memory_write_val[0:NUM_CORES-1];
+	wire core_memory_response[0:NUM_CORES-1];
 
 	wire [NUM_CORES-1:0] core_enable;
 	wire [NUM_CORES-1:0] core_request;
@@ -54,6 +55,7 @@ module Processor # (
 	assign memory_rden = core_memory_rden[device_core_id];
 	assign memory_wren = core_memory_wren[device_core_id];
 	assign memory_write_val = core_memory_write_val[device_core_id];
+	assign memory_response = core_memory_response[device_core_id];
 
 	genvar i;
 	generate
@@ -64,12 +66,12 @@ module Processor # (
 				.reset(reset),
 				.core_enable(core_enable[i]),
 				.core_request(core_request[i]),
-				.memory_addr(memory_addr),
-				.memory_wren(memory_wren),
-				.memory_rden(memory_rden),
-				.memory_write_val(memory_write_val),
+				.memory_addr(core_memory_addr[i]),
+				.memory_wren(core_memory_wren[i]),
+				.memory_rden(core_memory_rden[i]),
+				.memory_write_val(core_memory_write_val[i]),
 				.memory_read_val(memory_read_val),
-				.memory_response(memory_response)
+				.memory_response(core_memory_response[i])
 			);
 		end
 	endgenerate
