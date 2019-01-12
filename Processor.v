@@ -62,6 +62,8 @@ module Processor # (
 			Core _Core (
 				.clk(clk),
 				.reset(reset),
+				.core_enable(core_enable[i]),
+				.core_request(core_request[i]),
 				.memory_addr(memory_addr),
 				.memory_wren(memory_wren),
 				.memory_rden(memory_rden),
